@@ -1,0 +1,91 @@
+/* styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 40px;
+}
+
+h3 {
+    margin-top: 30px;
+    margin-left: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.todo {
+    margin-top: 1rem;
+}
+
+.note {
+    position: relative;
+    outline: 3px solid #d29505;
+    outline-offset: 3px;
+    margin-top: 1rem;
+    color: white;
+    border-radius: 5px;
+    box-shadow: rgba(252, 180, 65, 0.2) 0 15px 30px -5px;
+    background-color: #140f01;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.note-content {
+    flex-grow: 1;
+}
+
+.note-options {
+    display: flex;
+}
+
+.note-options button {
+    padding: 10px;
+    margin-left: 10px;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.note-options button:hover {
+    background-color: #357ae8;
+}
+
+.edit-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.edit-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.edit-buttons button {
+    margin-left: 5px;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-buttons button:hover {
+    background-color: #357ae8;
+}
