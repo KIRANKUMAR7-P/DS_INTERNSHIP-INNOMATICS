@@ -1,0 +1,78 @@
+<!-- index_simple.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Matcher</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            color: #007bff;
+        }
+        input[type="text"],
+        textarea {
+            background-color: #ffffff;
+            color: #495057;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        input[type="submit"],
+        input[type="button"] {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Regex Matcher</h1>
+    <form action="/results" method="post">
+        <label for="test_string">Test String:</label><br>
+        <textarea id="test_string" name="test_string" rows="10",cols="50" placeholder="Enter test string"></textarea><br>
+        <label for="regex_pattern">Regex Pattern:</label><br>
+        <input type="text" id="regex_pattern" name="regex_pattern" placeholder="Enter regex pattern"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <hr>
+    <h2>Email Validation</h2>
+    <div>
+        <label for="email">Email Address:</label><br>
+        <input type="text" id="email" name="email" placeholder="Enter email address"><br>
+        <input type="button" value="Validate Email" onclick="validateEmail()">
+        <div id="validation-result"></div>
+    </div>
+
+    <script>
+        function validateEmail() {
+            var email = document.getElementById('email').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/validate-email', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById('validation-result').innerText = response.result_message;
+                }
+            };
+            xhr.send('email=' + encodeURIComponent(email));
+        }
+    </script>
+</body>
+</html>
