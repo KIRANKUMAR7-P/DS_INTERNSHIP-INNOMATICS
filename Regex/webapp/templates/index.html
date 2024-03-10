@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGEX</title>
+    <style>
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ea; /* Light green background */
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 800px;
+            margin: 10px auto; /* Added some margin for spacing */
+            padding: 20px;
+            background-color: #fff; /* White background for container */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for container */
+            text-align: center; /* Center align all content */
+        }
+
+        /* Heading styles */
+        h1 {
+            color: #3A4D1B; /* Dark green color for title */
+        }
+
+        /* Form styles */
+        form {
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd; /* Border around the form */
+        }
+
+        /* Input styles */
+        textarea, input[type="text"], input[type="email"] {
+            width: calc(100% - 40px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Submit button styles */
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4A5D23; /* Dark green */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3A4D1B; /* Darker shade of green on hover */
+        }
+
+        /* Result styles */
+        .result-container {
+            margin-top: 20px;
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .result-table th,
+        .result-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .result-table th {
+            background-color: #4A5D23; /* Dark green for table header */
+            color: #fff;
+        }
+
+        /* Email link styles */
+        .email-link {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #3A4D1B; /* Dark green color for link */
+            font-weight: bold;
+        }
+
+        .email-link a {
+            text-decoration: none;
+        }
+
+        .email-link button {
+            background-color: #3A4D1B; /* Dark green */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .email-link button:hover {
+            background-color: #2A3D0B; /* Darker shade of green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Regex Checker</h1>
+        <form id="regexForm" action="/" method="post">
+            <label for="email">Test String:</label><br>
+            <textarea id="test_string" name="test_string" rows="10" placeholder="Enter test string" required></textarea><br>
+            <label for="regex">Regex Pattern:</label><br>
+            <input type="text" id="regex_pattern" name="regex_pattern" placeholder="Enter regex pattern" required><br><br>
+            <input type="submit" value="Match">
+        </form>
+        
+        <div class="result-container">
+            <h2>Match Result</h2>
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th>Matched</th>
+                    </tr>
+                </thead>
+                <tbody id="matchedPortions">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="email-link">
+            <p>Discover if your email is valid with our email validation tool!
+                <a href="/validate_email"> <!-- Removed inline styles -->
+                    <button type="button">Validate Email</button>
+                </a>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('regexForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                var testString = document.getElementById('test_string').value;
+                var regexPattern = document.getElementById('regex_pattern').value;
+                
+                var matches = testString.match(new RegExp(regexPattern, 'g'));
+                
+                var matchedPortions = document.getElementById('matchedPortions');
+                matchedPortions.innerHTML = '';
+                if (matches) {
+                    matches.forEach(function(match) {
+                        var row = document.createElement('tr');
+                        var cell = document.createElement('td');
+                        cell.textContent = match;
+                        row.appendChild(cell);
+                        matchedPortions.appendChild(row);
+                    });
+                }
+                
+                document.querySelector('.result-container').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
