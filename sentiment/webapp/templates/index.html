@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            background-image: url('https://cdn.analyticsvidhya.com/wp-content/uploads/2021/10/Sentiment-Analysis_2.png');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 10px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        textarea, input[type="text"], input[type="file"], select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .upload-container {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .upload-container:hover {
+            border-color: #007bff;
+        }
+        #fileInput {
+            display: none;
+        }
+        #fileNameLabel {
+            margin-top: 10px;
+        }
+        #errorText {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        function updateFileName() {
+            const fileInput = document.getElementById('fileInput');
+            const fileNameLabel = document.getElementById('fileNameLabel');
+            if (fileInput.files.length > 0) {
+                fileNameLabel.innerText = 'Selected File: ' + fileInput.files[0].name;
+            } else {
+                fileNameLabel.innerText = '';
+            }
+        }
+
+        function validateReview() {
+            const reviewTextArea = document.getElementById('reviewTextarea');
+            const errorText = document.getElementById('errorText');
+            if (reviewTextArea.value.trim() === '') {
+                errorText.innerText = 'Please enter the review.';
+                return false;
+            } else {
+                errorText.innerText = '';
+                return true;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>TEXT AND REVIEW PREDICTION</h1>
+
+        <!-- Review Prediction Form -->
+        <h2>Enter a Review for Prediction:</h2>
+        <form action="/predict_review" method="post" onsubmit="return validateReview()">
+            <textarea id="reviewTextarea" name="review" cols="30" rows="10"></textarea><br>
+            <input type="radio" name="algorithm" value="bow" checked> BoW Predict
+            <input type="radio" name="algorithm" value="tfidf"> TF-IDF Predict<br>
+            <button type="submit">Predict Review</button>
+            <p id="errorText"></p>
+        </form>
+
+        <!-- File Upload Form -->
+        <h2>Upload a CSV or Excel File for Prediction:</h2>
+        <p>Note: The uploaded CSV file should have a column named "Review" containing the text data & Max file size: 200MB</p>
+        <br>
+        <form id="fileForm" action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Upload a file:</label>
+            <div class="upload-container" onclick="document.getElementById('fileInput').click();">
+                Click here to upload file or drag and drop.
+                <input type="file" id="fileInput" name="file" onchange="updateFileName();" required accept=".csv, .xlsx">
+            </div>
+            <span id="fileNameLabel"></span><br>
+            <label for="fileAlgorithm">Select algorithm:</label>
+            <select id="fileAlgorithm" name="algorithm">
+                <option value="bow">Bag-of-Words (BoW)</option>
+                <option value="tfidf">TF-IDF</option>
+            </select>
+            <br>
+            <button type="submit">Upload & Analyze</button>
+        </form>
+    </div>
+</body>
+</html>

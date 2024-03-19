@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Set font family for text */
+            text-align: center; /* Center align text */
+            background-image: url('https://www.surveysensum.com/wp-content/uploads/2020/02/SENTIMENT-09-1.png'); /* Add background image */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background image */
+            color: #000; /* Set default text color */
+            padding-top: 50px; /* Add top padding */
+        }
+        h1 {
+            font-size: 48px; /* Increase title size */
+            color: #333; /* Change title color */
+            text-decoration: underline; /* Add underline to title */
+        }
+        p, a {
+            font-size: 24px; /* Increase text size */
+            color: #000; /* Set default text color */
+        }
+        .positive {
+            font-size: 30px; /* Increase sentiment text size */
+            font-weight: bold; /* Bold sentiment text */
+            color: #4CAF50; /* Green color for positive sentiment */
+        }
+        .negative {
+            font-size: 30px; /* Increase sentiment text size */
+            font-weight: bold; /* Bold sentiment text */
+            color: #F44336; /* Red color for negative sentiment */
+        }
+        .emoji {
+            font-size: 48px; /* Set font size for emoji */
+            margin-left: 10px; /* Add margin for spacing */
+        }
+        .button {
+            font-size: 24px; /* Button text size */
+            background-color: #4CAF50; /* Green color for positive sentiment */
+            border: none; /* Remove button border */
+            padding: 10px 20px; /* Add padding to button */
+            border-radius: 5px; /* Add border radius */
+            color: #fff; /* Button text color */
+            text-decoration: none; /* Remove underline */
+            margin-top: 20px; /* Add top margin */
+            display: inline-block; /* Display as inline block */
+        }
+        .button:hover {
+            background-color: #fdd835; /* Yellow color on hover */
+        }
+        .button:active {
+            background-color: #f44336; /* Red color when active/clicked */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            padding: 20px; /* Add padding */
+            border-radius: 10px; /* Add border radius */
+            margin: 50px auto; /* Center the container */
+            max-width: 600px; /* Set maximum width */
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RESULTS</h1>
+
+        <!-- Review Prediction Section -->
+        <h2>Review Prediction:</h2>
+        {% if review_prediction %}
+            <p><strong>Review:</strong> {{ review_text }}</p>
+            <p><strong>Prediction ({{ review_algorithm }}):</strong> {{ review_prediction }}</p>
+        {% else %}
+            <p>No review prediction available.</p>
+        {% endif %}
+     
+        <!-- File Upload Predictions Section -->
+        <h2>File Upload Predictions:</h2>
+        {% if file_predictions %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Review</th>
+                        {% if algorithm == 'bow' %}
+                            <th>Prediction (BoW)</th>
+                        {% elif algorithm == 'tfidf' %}
+                            <th>Prediction (TF-IDF)</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in file_predictions %}
+                        <tr>
+                            <td>{{ row['Review'] }}</td>
+                            {% if algorithm == 'bow' %}
+                                <td>{{ row['Prediction (BoW)'] }}</td>
+                            {% elif algorithm == 'tfidf' %}
+                                <td>{{ row['Prediction (TF-IDF)'] }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No file upload predictions available.</p>
+        {% endif %}
+    </div>
+    <!-- Back to Input Button -->
+    <a href="/" class="button">Back to Input</a>
+    
+</body>
+</html>
